@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Economic Segment Prediction</title>
+    <style>
+        body { font-family: Arial, sans-serif; background-color: #f5f8ff; color: #003366; padding: 20px; }
+        h2 { color: #003366; font-weight: bold; }
+        label { display: block; margin-top: 10px; font-weight: bold; }
+        input[type=text] { width: 250px; padding: 7px; margin-top: 3px; border-radius: 5px; border: 1px solid #003366; }
+        button { margin-top: 15px; padding: 10px 25px; background-color: #003366; color: white; border: none; border-radius: 5px; cursor: pointer; font-weight: bold; }
+        button:hover { background-color: #0059b3; }
+        .result { margin-top: 20px; font-size: 1.2em; font-weight: bold; color: #ff6600; }
+    </style>
+</head>
+<body>
+<h2>Segment Economic Prediction</h2>
+
+<form method="post" action="{% url 'predict_segment' %}">
+    {% csrf_token %}
+    {% for feature in features %}
+        <label>{{ feature }}</label>
+        <input type="text" name="{{ feature }}" value="0">
+    {% endfor %}
+    <button type="submit">Predict</button>
+</form>
+
+{% if prediction is not None %}
+<div class="result">
+    Predicted Economic Segment: {{ prediction }}
+</div>
+{% endif %}
+
+</body>
+</html>
