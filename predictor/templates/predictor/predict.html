@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Store Impact on Health</title>
+</head>
+<body>
+
+<h2>Store Impact on Health</h2>
+
+<p>
+This model analyzes how different food store types
+(fast-food outlets, supermarkets, farmers’ markets)
+and socio-economic factors influence local health outcomes.
+</p>
+
+
+
+<form method="post">
+    {% csrf_token %}
+
+    {% for f in features_data %}
+        <div style="margin-bottom: 20px;">
+
+            <label><strong>{{ f.name }}</strong></label><br>
+
+            <small style="color: #555;">
+                {{ f.description }}
+            </small><br><br>
+
+            <input type="number"
+                   step="any"
+                   name="{{ f.name }}"
+                   value="{{ f.default }}"
+                   style="width: 300px; padding: 5px;">
+
+        </div>
+    {% endfor %}
+
+    <button type="submit">Predict Health Risk</button>
+</form>
+
+{% if prediction %}
+    <h3>Prediction Result: {{ prediction }}</h3>
+{% endif %}
+
+</body>
+</html>
