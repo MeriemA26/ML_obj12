@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Health Risk Assessment</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        html, body {
+            min-height: 100%;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            padding: 40px 20px;
+            color: #2c3e50;
+        }
+        
+        .wrapper {
+            width: 100%;
+            max-width: 700px;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        .logo {
+            font-size: 48px;
+            margin-bottom: 15px;
+        }
+        
+        h1 {
+            font-size: 32px;
+            font-weight: 700;
+            color: #1a252f;
+            margin-bottom: 8px;
+            letter-spacing: -0.5px;
+        }
+        
+        .subtitle {
+            font-size: 15px;
+            color: #7f8c8d;
+            font-weight: 500;
+        }
+        
+        .main-card {
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.12);
+            padding: 50px;
+        }
+        
+        .form-wrapper {
+            margin-bottom: 30px;
+        }
+        
+        .input-group {
+            margin-bottom: 24px;
+        }
+        
+        .input-group:last-of-type {
+            margin-bottom: 0;
+        }
+        
+        label {
+            display: block;
+            font-size: 13px;
+            font-weight: 600;
+            color: #34495e;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            opacity: 0.85;
+        }
+        
+        input[type="text"],
+        input[type="number"] {
+            width: 100%;
+            padding: 14px 16px;
+            border: 2px solid #ecf0f1;
+            border-radius: 10px;
+            font-size: 15px;
+            font-family: inherit;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            background: #f8f9fa;
+            color: #2c3e50;
+        }
+        
+        input[type="text"]:hover,
+        input[type="number"]:hover {
+            border-color: #d5dbdb;
+            background: #ffffff;
+        }
+        
+        input[type="text"]:focus,
+        input[type="number"]:focus {
+            outline: none;
+            border-color: #3498db;
+            background: white;
+            box-shadow: 0 0 0 4px rgba(52, 152, 219, 0.08);
+        }
+        
+        .submit-btn {
+            width: 100%;
+            padding: 16px;
+            background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            margin-top: 15px;
+            letter-spacing: 0.5px;
+            box-shadow: 0 4px 15px rgba(52, 152, 219, 0.3);
+        }
+        
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(52, 152, 219, 0.4);
+        }
+        
+        .submit-btn:active {
+            transform: translateY(0);
+        }
+        
+        .result-card {
+            background: linear-gradient(135deg, #ecf0f1 0%, #f8f9fa 100%);
+            border: 2px solid #e8f4f8;
+            border-radius: 14px;
+            padding: 35px;
+            margin-top: 35px;
+            text-align: center;
+            animation: slideUp 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .result-label {
+            font-size: 13px;
+            font-weight: 600;
+            color: #7f8c8d;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 12px;
+            display: block;
+        }
+        
+        .result-value {
+            font-size: 42px;
+            font-weight: 700;
+            background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 15px;
+        }
+        
+        .result-subtitle {
+            font-size: 14px;
+            color: #95a5a6;
+            font-weight: 500;
+        }
+        
+        .divider {
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #ecf0f1, transparent);
+            margin: 35px 0;
+        }
+        
+        .values-table {
+            width: 100%;
+            margin-top: 30px;
+            border-collapse: collapse;
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+        }
+        
+        .values-table th {
+            background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
+            color: white;
+            padding: 14px 16px;
+            text-align: left;
+            font-size: 13px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+        }
+        
+        .values-table td {
+            padding: 12px 16px;
+            border-bottom: 1px solid #ecf0f1;
+            font-size: 14px;
+            color: #2c3e50;
+        }
+        
+        .values-table tr:last-child td {
+            border-bottom: none;
+        }
+        
+        .values-table tr:hover {
+            background: #f8f9fa;
+        }
+        
+        .feature-name {
+            font-weight: 600;
+            color: #34495e;
+        }
+        
+        .feature-value {
+            color: #3498db;
+            font-weight: 500;
+        }
+        
+        .autofill-section {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+            margin-top: 20px;
+            border: 2px dashed #d5dbdb;
+        }
+        
+        .autofill-section h3 {
+            font-size: 14px;
+            color: #34495e;
+            margin-bottom: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .autofill-textarea {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ecf0f1;
+            border-radius: 8px;
+            font-size: 14px;
+            font-family: 'Consolas', 'Monaco', monospace;
+            resize: vertical;
+            min-height: 80px;
+            transition: all 0.3s;
+        }
+        
+        .autofill-textarea:focus {
+            outline: none;
+            border-color: #3498db;
+            box-shadow: 0 0 0 4px rgba(52, 152, 219, 0.08);
+        }
+        
+        .autofill-btn {
+            width: 100%;
+            padding: 12px;
+            background: #95a5a6;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-top: 10px;
+        }
+        
+        .autofill-btn:hover {
+            background: #7f8c8d;
+            transform: translateY(-1px);
+        }
+        
+        .helper-text {
+            font-size: 12px;
+            color: #7f8c8d;
+            margin-top: 8px;
+            font-style: italic;
+        }
+        
+        @media (max-width: 600px) {
+            .main-card {
+                padding: 30px 20px;
+            }
+            
+            h1 {
+                font-size: 26px;
+            }
+            
+            .result-value {
+                font-size: 36px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="wrapper">
+    <div class="header">
+        <div class="logo">⚕️</div>
+        <h1>Health Risk Assessment</h1>
+        <p class="subtitle">Intelligent Obesity Risk Prediction System</p>
+    </div>
+    
+    <div class="main-card">
+        <form method="post" class="form-wrapper" id="predictionForm">
+            {% csrf_token %}
+            
+            {% for feature, info in feature_ranges.items %}
+                <div class="input-group">
+                    <label for="{{ feature }}">{{ feature|title }}</label>
+                    <input 
+                        type="text" 
+                        id="{{ feature }}" 
+                        name="{{ feature }}" 
+                        value="{{ info.default }}" 
+                        class="feature-input"
+                        data-index="{{ forloop.counter0 }}"
+                        required
+                    >
+                </div>
+            {% endfor %}
+            
+            <div class="autofill-section">
+                <h3>📋 Quick Fill</h3>
+                <textarea 
+                    id="autofillText" 
+                    class="autofill-textarea" 
+                    placeholder="Paste your values here (comma-separated or one per line)...&#10;Example: 1, 2, 3, 4, 5..."
+                ></textarea>
+                <button type="button" class="autofill-btn" onclick="autofillForm()">Fill Form</button>
+                <p class="helper-text">Paste {{ feature_ranges|length }} values in order: {% for feature in feature_ranges.keys %}{{ feature }}{% if not forloop.last %}, {% endif %}{% endfor %}</p>
+            </div>
+            
+            <button type="submit" class="submit-btn">Analyze Risk Profile</button>
+        </form>
+        
+        <script>
+            function autofillForm() {
+                const text = document.getElementById('autofillText').value.trim();
+                if (!text) {
+                    alert('Please paste some values first!');
+                    return;
+                }
+                
+                // Try to parse as comma-separated or line-separated
+                let values = [];
+                if (text.includes(',')) {
+                    values = text.split(',').map(v => v.trim()).filter(v => v);
+                } else if (text.includes('\n')) {
+                    values = text.split('\n').map(v => v.trim()).filter(v => v);
+                } else {
+                    values = text.split(/\s+/).filter(v => v);
+                }
+                
+                const inputs = document.querySelectorAll('.feature-input');
+                const expectedCount = inputs.length;
+                
+                if (values.length !== expectedCount) {
+                    alert(`Expected ${expectedCount} values, but got ${values.length}. Please check your input.`);
+                    return;
+                }
+                
+                inputs.forEach((input, index) => {
+                    if (values[index]) {
+                        input.value = values[index];
+                    }
+                });
+                
+                // Scroll to form
+                document.getElementById('predictionForm').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            }
+        </script>
+        
+        {% if prediction %}
+            <div class="divider"></div>
+            
+            {% if input_values %}
+                <div>
+                    <h3 style="font-size: 16px; color: #34495e; margin-bottom: 15px; font-weight: 600;">Input Values</h3>
+                    <table class="values-table">
+                        <thead>
+                            <tr>
+                                <th>Feature</th>
+                                <th>Value</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for feature, value in input_values.items %}
+                                <tr>
+                                    <td class="feature-name">{{ feature }}</td>
+                                    <td class="feature-value">{{ value|floatformat:4 }}</td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                <div class="divider"></div>
+            {% endif %}
+            
+            <div class="result-card">
+                <span class="result-label">Assessment Result</span>
+                <div class="result-value">{{ prediction }}</div>
+                <p class="result-subtitle">Based on health indicators analysis</p>
+            </div>
+        {% endif %}
+    </div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,93 @@
+{
+    "model_name": "KNN",
+    "model_type": "regression",
+    "target_variable": "LACCESS_POP10",
+    "feature_names": [
+        "SUPERC12",
+        "LACCESS_HHNV10",
+        "Employed",
+        "Labor_Force",
+        "FFR12",
+        "FSR12",
+        "GROC12",
+        "Unemployed",
+        "PCT_HISP10",
+        "SNAP_PART_RATE10",
+        "PCT_NHWHITE10",
+        "PCT_OBESE_ADULTS10",
+        "PCT_WIC14",
+        "access_to_exercise_pct",
+        "median_household_income"
+    ],
+    "n_features": 15,
+    "feature_order": {
+        "0": "SUPERC12",
+        "1": "LACCESS_HHNV10",
+        "2": "Employed",
+        "3": "Labor_Force",
+        "4": "FFR12",
+        "5": "FSR12",
+        "6": "GROC12",
+        "7": "Unemployed",
+        "8": "PCT_HISP10",
+        "9": "SNAP_PART_RATE10",
+        "10": "PCT_NHWHITE10",
+        "11": "PCT_OBESE_ADULTS10",
+        "12": "PCT_WIC14",
+        "13": "access_to_exercise_pct",
+        "14": "median_household_income"
+    },
+    "timestamp": "20260101_221621",
+    "run_number": 1,
+    "data_shape": {
+        "total_samples": 10000,
+        "train_samples": 8000,
+        "test_samples": 2000,
+        "n_features": 15
+    },
+    "performance_metrics": {
+        "test_r2": 0.9998511550663424,
+        "test_rmse": 1960.1986476301329,
+        "test_mae": 778.6784669599673,
+        "cv_r2_mean": 0.9998583841585249,
+        "cv_r2_std": 4.869905874544001e-05,
+        "train_r2": 1.0,
+        "train_rmse": 0.0
+    },
+    "preprocessing": {
+        "scaling_method": "StandardScaler",
+        "scaler_file": "run_1_scaler.pkl",
+        "encoder_file": "run_1_encoder.pkl",
+        "feature_selection": "Top 15 by correlation",
+        "feature_types": "All numerical (no categorical encoding needed)",
+        "id_columns_dropped": [
+            "_id",
+            "_ID",
+            "_key",
+            "_KEY",
+            "fips",
+            "FIPS",
+            "code",
+            "CODE",
+            "fk",
+            "FK"
+        ],
+        "encoder_note": "Placeholder encoder - not used for predictions (all features are numerical)"
+    },
+    "model_file": "run_1_best_model_KNN.pkl",
+    "required_files": [
+        "run_1_best_model_KNN.pkl",
+        "run_1_scaler.pkl",
+        "run_1_encoder.pkl",
+        "run_1_model_info.json"
+    ],
+    "deployment_workflow": {
+        "step_1": "Load model_info.json",
+        "step_2": "Load scaler.pkl for feature scaling",
+        "step_3": "Load encoder.pkl (optional - for consistency)",
+        "step_4": "Load best_model_XXX.pkl for predictions",
+        "step_5": "Scale input features using scaler before prediction",
+        "step_6": "Call model.predict(scaled_features)"
+    },
+    "notes": "Complete deployment package with all required artifacts for production inference."
+}
