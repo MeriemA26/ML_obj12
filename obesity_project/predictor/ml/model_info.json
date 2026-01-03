@@ -1,0 +1,83 @@
+{
+  "features": [
+    "MEDHHINC10",
+    "POVRATE10",
+    "Unemployment_Rate_county",
+    "physical_inactivity_rate",
+    "diabetes_prevalence_rate",
+    "food_insecurity_rate",
+    "food_environment_index",
+    "PCT_65OLDER10",
+    "PCT_18YOUNGER10",
+    "LACCESS_POP10"
+  ],
+  "feature_ranges": {
+    "MEDHHINC10": {
+      "min": 20000,
+      "max": 120000,
+      "default": 55000
+    },
+    "POVRATE10": {
+      "min": 5,
+      "max": 40,
+      "default": 15.5
+    },
+    "Unemployment_Rate_county": {
+      "min": 2,
+      "max": 15,
+      "default": 6.2
+    },
+    "physical_inactivity_rate": {
+      "min": 10,
+      "max": 40,
+      "default": 25.0
+    },
+    "diabetes_prevalence_rate": {
+      "min": 5,
+      "max": 20,
+      "default": 10.5
+    },
+    "food_insecurity_rate": {
+      "min": 5,
+      "max": 25,
+      "default": 12.0
+    },
+    "food_environment_index": {
+      "min": 0,
+      "max": 10,
+      "default": 7.5
+    },
+    "PCT_65OLDER10": {
+      "min": 5,
+      "max": 30,
+      "default": 18.0
+    },
+    "PCT_18YOUNGER10": {
+      "min": 15,
+      "max": 35,
+      "default": 22.0
+    },
+    "LACCESS_POP10": {
+      "min": 0,
+      "max": 20,
+      "default": 8.0
+    }
+  },
+  "class_centers": {
+    "Low": 0.2679236363322088,
+    "Medium": 0.3715670112975709,
+    "High": 0.41196656767012313
+  },
+  "feature_importance": {
+    "MEDHHINC10": 0.024759022518992424,
+    "POVRATE10": 0.03732965514063835,
+    "Unemployment_Rate_county": 0.08806921541690826,
+    "physical_inactivity_rate": 0.5443316698074341,
+    "diabetes_prevalence_rate": 0.06944982707500458,
+    "food_insecurity_rate": 0.01938690058887005,
+    "food_environment_index": 0.002246964955702424,
+    "PCT_65OLDER10": 0.11644084751605988,
+    "PCT_18YOUNGER10": 0.07084792852401733,
+    "LACCESS_POP10": 0.027137968689203262
+  }
+}

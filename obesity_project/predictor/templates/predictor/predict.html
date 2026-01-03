@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Obesity Risk Predictor</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 30px;
+        }
+        h2 {
+            color: #2F4F4F;
+        }
+        label {
+            font-weight: bold;
+        }
+        small {
+            display: block;
+            color: #555;
+            margin-bottom: 5px;
+        }
+        input {
+            width: 250px;
+            padding: 5px;
+            margin-bottom: 15px;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            border: none;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        .prediction {
+            margin-top: 20px;
+            font-size: 18px;
+            color: #800000;
+        }
+    </style>
+</head>
+<body>
+
+<h2>Obesity Risk Prediction</h2>
+<p>
+This classification model estimates a county’s obesity risk level based on living conditions, food access, and health-related factors.
+</p>
+
+<form method="post">
+    {% csrf_token %}
+
+    {% for f in features %}
+        <label>{{ f.name }}</label>
+        <small>{{ f.description }}</small>
+        <input type="number" step="any" name="{{ f.name }}" required>
+        <br>
+    {% endfor %}
+
+    <button type="submit">Predict</button>
+</form>
+
+{% if prediction %}
+    <div class="prediction">
+        <strong>Prediction Result:</strong> {{ prediction }}
+    </div>
+{% endif %}
+
+</body>
+</html>
