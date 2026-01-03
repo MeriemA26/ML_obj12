@@ -1,7 +1,9 @@
 from django.urls import path
-from .views import predict_view, test_prediction
+from . import views
+
+app_name = 'mlapp'
 
 urlpatterns = [
-    path('', predict_view, name='predict'),
-    path('test/', test_prediction, name='test'),
+    path('', views.predict_view, name='predict'),
+    path('api/test/', views.test_prediction, name='test'),
 ]

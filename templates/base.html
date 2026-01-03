@@ -33,9 +33,9 @@
         </div>
 
         <div class="nav flex-column">
-            <a href="/" class="nav-link {% if request.path == '/' or request.path == '/predictor/' %}active{% endif %}">
+            <a href="/" class="nav-link {% if request.path == '/' %}active{% endif %}">
                 <i class="bi bi-cpu"></i>
-                <span>RF Predictor</span>
+                <span>Food Desert</span>
             </a>
             <a href="/quality/" class="nav-link {% if '/quality/' in request.path %}active{% endif %}">
                 <i class="bi bi-gem"></i>
@@ -52,6 +52,18 @@
             <a href="/segment/" class="nav-link {% if '/segment/' in request.path %}active{% endif %}">
                 <i class="bi bi-pie-chart"></i>
                 <span>Segmentation</span>
+            </a>
+            <a href="/access/" class="nav-link {% if '/access/' in request.path %}active{% endif %}">
+                <i class="bi bi-geo-alt"></i>
+                <span>Limited Access</span>
+            </a>
+            <a href="/predictor/" class="nav-link {% if request.path == '/predictor/' %}active{% endif %}">
+                <i class="bi bi-heart-pulse"></i>
+                <span>Health Score</span>
+            </a>
+            <a href="/predictor/store/" class="nav-link {% if '/predictor/store/' in request.path %}active{% endif %}">
+                <i class="bi bi-shop"></i>
+                <span>Store Impact</span>
             </a>
         </div>
 

@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'obj1',
     'obj2',
     'obesity_predictor',
+    'mlapp',  # KNN Limited Access Model from ayoub branch
 ]
 
 MIDDLEWARE = [

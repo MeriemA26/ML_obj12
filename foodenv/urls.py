@@ -10,6 +10,7 @@ urlpatterns = [
     path('segment/', include('segment.urls')),
     path('predictor/', include('predictor.urls')),  # RF Predictor
     path('obesity/', include('obesity_predictor.urls')),
+    path('access/', include('mlapp.urls')),  # KNN Limited Access from ayoub
 ]
 
 from django.conf import settings

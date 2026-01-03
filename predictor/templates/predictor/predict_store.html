@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block title %}Health Score - DataHub{% endblock %}
+{% block title %}Store Impact - DataHub{% endblock %}
 
 {% block content %}
 <div class="row justify-content-center">
@@ -9,10 +9,10 @@
     <div class="col-12 text-center mb-5">
         <h1 class="display-4 fw-bold"
             style="background: linear-gradient(to right, #fff, #94a3b8); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">
-            Health Score Prediction
+            Store Impact on Health
         </h1>
-        <p class="text-muted lead">Random Forest Regression for Health Risk Assessment</p>
-        <p class="text-info small">Predicts overall health risk based on socioeconomic indicators</p>
+        <p class="text-muted lead">KNN Classification for Health Risk Assessment</p>
+        <p class="text-info small">Predicts health impact based on food store availability</p>
     </div>
 
     <!-- Main Card -->
@@ -20,10 +20,10 @@
         <div class="card-custom">
             <div class="card-header-custom border-0 pb-0">
                 <div class="d-flex align-items-center">
-                    <span class="badge bg-danger bg-opacity-10 text-danger px-3 py-2 rounded-pill me-3">
-                        <i class="bi bi-tree-fill me-2"></i> RF ENGINE
+                    <span class="badge bg-warning bg-opacity-10 text-warning px-3 py-2 rounded-pill me-3">
+                        <i class="bi bi-shop me-2"></i> KNN MODEL
                     </span>
-                    <h4 class="card-title mb-0">Health Indicators</h4>
+                    <h4 class="card-title mb-0">Store & Access Indicators</h4>
                 </div>
             </div>
 
@@ -42,7 +42,7 @@
                                 <input type="number" step="any" name="{{ field.name }}" value="{{ field.default }}"
                                     class="form-control border-start-0 border-secondary bg-dark text-light" required>
                             </div>
-                            <small class="text-muted" style="font-size: 0.65rem; opacity: 0.6;">{{ field.name }}</small>
+                            <small class="text-muted" style="font-size: 0.65rem; opacity: 0.6;">{{ field.desc }}</small>
                         </div>
                     </div>
                     {% endfor %}
@@ -50,7 +50,7 @@
 
                 <div class="mt-5 text-center">
                     <button type="submit" class="btn btn-primary-custom btn-lg w-50 py-3 text-uppercase fw-bold">
-                        <i class="bi bi-heart-pulse me-2"></i> Calculate Score
+                        <i class="bi bi-heart-pulse me-2"></i> Predict Health Impact
                     </button>
                 </div>
             </form>
@@ -61,7 +61,7 @@
     <div class="col-xl-8 mt-4">
         <div class="result-box"
             style="{% if prediction_context.color == 'success' %}border-color: rgba(34,197,94,0.3); background: rgba(34,197,94,0.1);{% elif prediction_context.color == 'warning' %}border-color: rgba(245,158,11,0.3); background: rgba(245,158,11,0.1);{% else %}border-color: rgba(239,68,68,0.3); background: rgba(239,68,68,0.1);{% endif %}">
-            <h5 class="text-uppercase text-muted mb-3">Health Risk Score</h5>
+            <h5 class="text-uppercase text-muted mb-3">Health Impact Prediction</h5>
             <div class="result-value"
                 style="{% if prediction_context.color == 'success' %}color: #22c55e;{% elif prediction_context.color == 'warning' %}color: #f59e0b;{% else %}color: #ef4444;{% endif %}">
                 {{ prediction }}</div>
@@ -71,11 +71,35 @@
                     {% if prediction_context.color == 'success' %}<i class="bi bi-check-circle-fill me-2"></i>{% elif
                     prediction_context.color == 'warning' %}<i class="bi bi-exclamation-triangle-fill me-2"></i>{% else
                     %}<i class="bi bi-x-circle-fill me-2"></i>{% endif %}
-                    {{ prediction_context.level }}
+                    Store Environment Impact
                 </span>
             </div>
             <p class="text-muted mt-3 mb-0">{{ prediction_context.message }}</p>
         </div>
+
+        {% if input_display %}
+        <div class="card-custom mt-4">
+            <h5 class="mb-3"><i class="bi bi-list-check me-2"></i> Input Summary</h5>
+            <div class="table-responsive" style="max-height: 300px; overflow-y: auto;">
+                <table class="table table-dark table-hover mb-0">
+                    <thead>
+                        <tr>
+                            <th>Indicator</th>
+                            <th class="text-end">Value</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for item in input_display %}
+                        <tr>
+                            <td>{{ item.label }}</td>
+                            <td class="text-end text-warning">{{ item.value|floatformat:2 }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        {% endif %}
     </div>
     {% endif %}
 </div>
