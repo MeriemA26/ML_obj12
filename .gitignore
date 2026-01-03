@@ -1,0 +1,14 @@
+# Excel Files
+*.xlsx
+
+# Python
+__pycache__/
+*.pyc
+
+# Environment
+.env
+venv/
+
+# Database
+db.sqlite3
+
