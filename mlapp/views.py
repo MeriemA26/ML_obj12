@@ -90,6 +90,12 @@ def predict_view(request):
                 val = float(request.POST.get(f, FEATURE_DEFAULTS.get(f, 0)))
                 values.append(val)
                 input_values[f] = val
+                
+                # Update the field value in the fields list for rendering
+                for field in fields:
+                    if field['name'] == f:
+                        field['value'] = val
+                        
                 input_display.append({
                     'label': FEATURE_LABELS.get(f, f),
                     'value': val

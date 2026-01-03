@@ -5,7 +5,6 @@
 
 {% block content %}
 <div class="row justify-content-center">
-    <!-- Header -->
     <div class="col-12 text-center mb-5">
         <h1 class="display-4 fw-bold"
             style="background: linear-gradient(to right, #fff, #94a3b8); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">
@@ -64,13 +63,12 @@
         <div class="result-box"
             style="{% if result.is_food_desert %}border-color: rgba(239,68,68,0.3); background: rgba(239,68,68,0.1);{% else %}border-color: rgba(34,197,94,0.3); background: rgba(34,197,94,0.1);{% endif %}">
             <h5 class="text-uppercase text-muted mb-3">Prediction Result</h5>
+            <!-- Explicitly single line for category -->
             <div class="result-value"
-                style="{% if result.is_food_desert %}color: #ef4444;{% else %}color: #22c55e;{% endif %}">{{
-                result.category }}</div>
+                style="{% if result.is_food_desert %}color: #ef4444;{% else %}color: #22c55e;{% endif %}">{{ result.category }}</div>
 
             {% if result.probabilities %}
             <div class="mt-4">
-                <!-- Non-Desert (Healthy Zone) -->
                 <div class="mb-3">
                     <div class="d-flex justify-content-between align-items-center mb-1">
                         <span class="text-success fw-semibold"><i class="bi bi-check-circle-fill me-2"></i>Healthy Zone
@@ -85,7 +83,6 @@
                     </div>
                 </div>
 
-                <!-- Desert (Food Desert) -->
                 <div class="mb-3">
                     <div class="d-flex justify-content-between align-items-center mb-1">
                         <span class="text-danger fw-semibold"><i class="bi bi-exclamation-triangle-fill me-2"></i>Food

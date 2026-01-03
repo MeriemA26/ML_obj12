@@ -33,6 +33,11 @@
         </div>
 
         <div class="nav flex-column">
+            <a href="/dashboard/"
+                class="nav-link {% if request.path == '/dashboard/' %}active{% endif %} mb-3 border-bottom border-secondary pb-3">
+                <i class="bi bi-bar-chart-fill text-warning"></i>
+                <span class="text-warning">BI Dashboard</span>
+            </a>
             <a href="/" class="nav-link {% if request.path == '/' %}active{% endif %}">
                 <i class="bi bi-cpu"></i>
                 <span>Food Desert</span>
@@ -59,7 +64,7 @@
             </a>
             <a href="/predictor/" class="nav-link {% if request.path == '/predictor/' %}active{% endif %}">
                 <i class="bi bi-heart-pulse"></i>
-                <span>Health Score</span>
+                <span>Insecurity Hotspots</span>
             </a>
             <a href="/predictor/store/" class="nav-link {% if '/predictor/store/' in request.path %}active{% endif %}">
                 <i class="bi bi-shop"></i>

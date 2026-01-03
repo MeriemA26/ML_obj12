@@ -10,7 +10,8 @@ class DiabetesRiskForm(forms.Form):
         min_value=0,
         max_value=100,
         widget=forms.NumberInput(attrs={
-            'class': 'form-control',
+            'class': 'form-control border-start-0 ps-0 text-light',
+            'style': 'background: rgba(15,23,42,0.5);',
             'placeholder': '30.0',
             'step': '0.1'
         }),
@@ -22,7 +23,8 @@ class DiabetesRiskForm(forms.Form):
         min_value=0,
         max_value=100,
         widget=forms.NumberInput(attrs={
-            'class': 'form-control',
+            'class': 'form-control border-start-0 ps-0 text-light',
+            'style': 'background: rgba(15,23,42,0.5);',
             'placeholder': '25.0',
             'step': '0.1'
         }),
@@ -34,7 +36,8 @@ class DiabetesRiskForm(forms.Form):
         min_value=0,
         max_value=10,
         widget=forms.NumberInput(attrs={
-            'class': 'form-control',
+            'class': 'form-control border-start-0 ps-0 text-light',
+            'style': 'background: rgba(15,23,42,0.5);',
             'placeholder': '7.5',
             'step': '0.1'
         }),
@@ -46,7 +49,8 @@ class DiabetesRiskForm(forms.Form):
         min_value=0,
         max_value=100,
         widget=forms.NumberInput(attrs={
-            'class': 'form-control',
+            'class': 'form-control border-start-0 ps-0 text-light',
+            'style': 'background: rgba(15,23,42,0.5);',
             'placeholder': '15.0',
             'step': '0.1'
         }),
@@ -58,7 +62,8 @@ class DiabetesRiskForm(forms.Form):
         min_value=0,
         max_value=500000,
         widget=forms.NumberInput(attrs={
-            'class': 'form-control',
+            'class': 'form-control border-start-0 ps-0 text-light',
+            'style': 'background: rgba(15,23,42,0.5);',
             'placeholder': '50000',
             'step': '1000'
         }),
@@ -70,7 +75,8 @@ class DiabetesRiskForm(forms.Form):
         min_value=0,
         max_value=100,
         widget=forms.NumberInput(attrs={
-            'class': 'form-control',
+            'class': 'form-control border-start-0 ps-0 text-light',
+            'style': 'background: rgba(15,23,42,0.5);',
             'placeholder': '12.0',
             'step': '0.1'
         }),
@@ -82,7 +88,8 @@ class DiabetesRiskForm(forms.Form):
         min_value=0,
         max_value=100,
         widget=forms.NumberInput(attrs={
-            'class': 'form-control',
+            'class': 'form-control border-start-0 ps-0 text-light',
+            'style': 'background: rgba(15,23,42,0.5);',
             'placeholder': '10.0',
             'step': '0.1'
         }),
@@ -94,7 +101,8 @@ class DiabetesRiskForm(forms.Form):
         min_value=0,
         max_value=100,
         widget=forms.NumberInput(attrs={
-            'class': 'form-control',
+            'class': 'form-control border-start-0 ps-0 text-light',
+            'style': 'background: rgba(15,23,42,0.5);',
             'placeholder': '65.0',
             'step': '0.1'
         }),
@@ -106,7 +114,8 @@ class DiabetesRiskForm(forms.Form):
         min_value=0,
         max_value=100,
         widget=forms.NumberInput(attrs={
-            'class': 'form-control',
+            'class': 'form-control border-start-0 ps-0 text-light',
+            'style': 'background: rgba(15,23,42,0.5);',
             'placeholder': '12.0',
             'step': '0.1'
         }),

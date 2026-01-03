@@ -34,10 +34,14 @@ def predict_segment(request):
     features_for_template = []
     for f in FEATURES:
         cfg = FEATURE_CONFIG.get(f, {})
+        # Use POST value if available, else example/default
+        current_value = request.POST.get(f) if request.method == 'POST' else None
+        
         features_for_template.append({
             'name': f,
             'label': cfg.get('label', f),
-            'example': cfg.get('example', 0)
+            'example': cfg.get('example', 0),
+            'value': current_value  # Pass the preserved value
         })
     
     if request.method == 'POST':
@@ -51,8 +55,32 @@ def predict_segment(request):
             # Scale and predict
             X = np.array(values).reshape(1, -1)
             X_scaled = scaler.transform(X)
-            prediction = svm_model.predict(X_scaled)[0]
-            result = int(prediction)
+            prediction = int(svm_model.predict(X_scaled)[0])
+            
+            # Map cluster to definition
+            # 0 – Low: low income, high unemployment
+            # 1–2 – Medium: average income and employment
+            # 3 – High: high income, low unemployment
+            
+            if prediction == 0:
+                label = "Low"
+                desc = "Low income, High unemployment"
+                color = "danger"
+            elif prediction == 3:
+                label = "High"
+                desc = "High income, Low unemployment"
+                color = "success"
+            else: # 1 or 2
+                label = "Medium"
+                desc = "Average income and employment"
+                color = "warning"
+                
+            result = {
+                'cluster': prediction,
+                'label': label,
+                'description': desc,
+                'color': color
+            }
             
         except Exception as e:
             print(f"Segmentation error: {e}")

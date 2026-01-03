@@ -42,7 +42,7 @@ class QualityPredictView(View):
             if PREDICTOR is None:
                 return render(request, 'quality/index.html', {
                     'form': form,
-                    'error': 'Modèle non disponible',
+                    'error': 'Model not available',
                     'model_score': "9.9/10 ⭐",
                     'model_type': "Random Forest Régression"
                 })
@@ -77,7 +77,7 @@ class QualityAPIView(View):
             if PREDICTOR is None:
                 return JsonResponse({
                     'error': True,
-                    'message': 'Modèle non disponible'
+                    'message': 'Model not available'
                 })
             
             result = PREDICTOR.predict(data)
@@ -86,5 +86,5 @@ class QualityAPIView(View):
         except Exception as e:
             return JsonResponse({
                 'error': True,
-                'message': f'Erreur: {str(e)}'
+                'message': f'Error: {str(e)}'
             })

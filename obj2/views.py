@@ -17,13 +17,13 @@ except Exception as e:
 
 class HomeView(TemplateView):
     """Page d'accueil avec formulaire"""
-    template_name = 'predictor/index.html'
+    template_name = 'predictor/food_desert.html'
     
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['form'] = FoodDesertForm()
         context['model_score'] = "9.5/10 ⭐"
-        context['model_type'] = "Random Forest Optimisé"  # NOUVEAU
+        context['model_type'] = "Optimized Random Forest"  # NOUVEAU
         context['model_auc'] = "0.920"  # NOUVEAU
         context['model_recall'] = "85.0%"  # NOUVEAU
         return context
@@ -41,11 +41,11 @@ class PredictView(View):
             input_data = form.cleaned_data
             
             if PREDICTOR is None:
-                return render(request, 'predictor/index.html', {
+                return render(request, 'predictor/food_desert.html', {
                     'form': form,
-                    'error': 'Modèle non disponible',
+                    'error': 'Model not available',
                     'model_score': "9.5/10 ⭐",
-                    'model_type': "Random Forest Optimisé"  # NOUVEAU
+                    'model_type': "Optimized Random Forest"  # NOUVEAU
                 })
             
             # Prédiction
@@ -55,21 +55,25 @@ class PredictView(View):
                 'form': form,
                 'result': result,
                 'model_score': "9.5/10 ⭐",
-                'model_type': "Random Forest Optimisé",  # NOUVEAU
+                'model_type': "Optimized Random Forest",  # NOUVEAU
                 'model_auc': "0.920",  # NOUVEAU
                 'model_recall': "85.0%"  # NOUVEAU
             }
             
-            return render(request, 'predictor/index.html', context)
+            return render(request, 'predictor/food_desert.html', context)
         
         # Formulaire invalide
-        return render(request, 'predictor/index.html', {
+        return render(request, 'predictor/food_desert.html', {
             'form': form,
             'model_score': "9.5/10 ⭐",
-            'model_type': "Random Forest Optimisé"  # NOUVEAU
+            'model_type': "Optimized Random Forest"  # NOUVEAU
         })
 
 # ... PredictAPIView reste inchangé ...
+class DashboardView(TemplateView):
+    """Vue pour le tableau de bord Power BI"""
+    template_name = 'dashboard.html'
+
 class PredictAPIView(View):
     """API pour les prédictions (format JSON)"""
     
@@ -80,7 +84,7 @@ class PredictAPIView(View):
             if PREDICTOR is None:
                 return JsonResponse({
                     'error': True,
-                    'message': 'Modèle non disponible'
+                    'message': 'Model not available'
                 })
             
             result = PREDICTOR.predict(data)
@@ -89,5 +93,5 @@ class PredictAPIView(View):
         except Exception as e:
             return JsonResponse({
                 'error': True,
-                'message': f'Erreur: {str(e)}'
+                'message': f'Error: {str(e)}'
             })

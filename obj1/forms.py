@@ -9,7 +9,8 @@ class FoodQualityForm(forms.Form):
         min_value=0,
         max_value=500000,
         widget=forms.NumberInput(attrs={
-            'class': 'form-control',
+            'class': 'form-control border-start-0 ps-0 text-light',
+            'style': 'background: rgba(15,23,42,0.5);',
             'placeholder': '50000',
             'step': '1000'
         }),
@@ -21,7 +22,8 @@ class FoodQualityForm(forms.Form):
         min_value=0,
         max_value=100,
         widget=forms.NumberInput(attrs={
-            'class': 'form-control',
+            'class': 'form-control border-start-0 ps-0 text-light',
+            'style': 'background: rgba(15,23,42,0.5);',
             'placeholder': '25.0',
             'step': '0.1'
         }),
@@ -33,7 +35,8 @@ class FoodQualityForm(forms.Form):
         min_value=0,
         max_value=1,
         widget=forms.NumberInput(attrs={
-            'class': 'form-control',
+            'class': 'form-control border-start-0 ps-0 text-light',
+            'style': 'background: rgba(15,23,42,0.5);',
             'placeholder': '0.12',
             'step': '0.01'
         }),
@@ -45,7 +48,8 @@ class FoodQualityForm(forms.Form):
         min_value=0,
         max_value=100,
         widget=forms.NumberInput(attrs={
-            'class': 'form-control',
+            'class': 'form-control border-start-0 ps-0 text-light',
+            'style': 'background: rgba(15,23,42,0.5);',
             'placeholder': '65.0',
             'step': '0.1'
         }),
@@ -57,7 +61,8 @@ class FoodQualityForm(forms.Form):
         min_value=0,
         max_value=500000,
         widget=forms.NumberInput(attrs={
-            'class': 'form-control',
+            'class': 'form-control border-start-0 ps-0 text-light',
+            'style': 'background: rgba(15,23,42,0.5);',
             'placeholder': '50000',
             'step': '1000'
         }),
@@ -69,7 +74,8 @@ class FoodQualityForm(forms.Form):
         min_value=0,
         max_value=10,
         widget=forms.NumberInput(attrs={
-            'class': 'form-control',
+            'class': 'form-control border-start-0 ps-0 text-light',
+            'style': 'background: rgba(15,23,42,0.5);',
             'placeholder': '1.2',
             'step': '0.1'
         }),
@@ -81,7 +87,8 @@ class FoodQualityForm(forms.Form):
         min_value=0,
         max_value=500,
         widget=forms.NumberInput(attrs={
-            'class': 'form-control',
+            'class': 'form-control border-start-0 ps-0 text-light',
+            'style': 'background: rgba(15,23,42,0.5);',
             'placeholder': '75.0',
             'step': '1'
         }),
@@ -93,7 +100,8 @@ class FoodQualityForm(forms.Form):
         min_value=-100,
         max_value=100,
         widget=forms.NumberInput(attrs={
-            'class': 'form-control',
+            'class': 'form-control border-start-0 ps-0 text-light',
+            'style': 'background: rgba(15,23,42,0.5);',
             'placeholder': '3.5',
             'step': '0.1'
         }),

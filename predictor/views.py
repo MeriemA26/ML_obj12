@@ -28,7 +28,7 @@ RF_FEATURE_LABELS = {
     'median_household_income': 'Median Household Income ($)',
     'child_poverty_rate': 'Child Poverty Rate (%)',
     'physical_inactivity_rate': 'Physical Inactivity Rate (%)',
-    'food_access_score': 'Food Access Score (0-10)',
+    'food_access_score': 'Food Access Score',
     'POVRATE10': 'Poverty Rate (%)',
     'PCT_SNAP14': 'SNAP Participation (%)',
     'diabetes_prevalence_rate': 'Diabetes Prevalence (%)',
@@ -71,7 +71,7 @@ STORE_FEATURES = {
     "LACCESS_POP10": {"label": "Limited Access Population", "default": 5000, "desc": "People far from supermarket"},
     "LACCESS_LOWI10": {"label": "Low Income Limited Access", "default": 2000, "desc": "Low-income with limited access"},
     "LACCESS_HHNV10": {"label": "No Vehicle Limited Access", "default": 500, "desc": "Households without vehicle"},
-    "food_access_score": {"label": "Food Access Score (0-10)", "default": 6, "desc": "Composite access score"},
+    "food_access_score": {"label": "Food Access Score", "default": 6, "desc": "Composite access score"},
     "food_environment_index": {"label": "Food Environment Index", "default": 7, "desc": "Overall food environment"},
     "median_household_income": {"label": "Median Income ($)", "default": 50000, "desc": "Median household income"},
     "PERPOV10": {"label": "Poverty Rate (%)", "default": 15, "desc": "% below poverty line"},
@@ -94,7 +94,14 @@ def predict_rf_view(request):
         })
     
     if request.method == "POST" and RF_LOADED:
-        input_map = {f: float(request.POST.get(f, 0)) for f in RF_FEATURES}
+        input_map = {}
+        for f in RF_FEATURES:
+            raw_val = float(request.POST.get(f, 0))
+            input_map[f] = raw_val
+            # Update field value for display
+            for field in fields:
+                if field['name'] == f:
+                    field['value'] = raw_val
         
         # Unit conversions
         if input_map['child_poverty_rate'] > 1.0:
@@ -151,6 +158,12 @@ def predict_store_impact_view(request):
         for name in STORE_FEATURES.keys():
             value = float(request.POST.get(name, 0))
             input_data.append(value)
+            
+            # Update field value for display
+            for field in fields:
+                if field['name'] == name:
+                    field['value'] = value
+
             input_display.append({
                 'label': STORE_FEATURES[name]['label'],
                 'value': value

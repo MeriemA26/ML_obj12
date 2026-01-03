@@ -53,6 +53,11 @@ def predict_obesity(request):
         for feature in FEATURES:
             value = float(request.POST.get(feature))
             input_data.append(value)
+            
+            # Update feature value for display
+            for f in features_for_template:
+                if f['name'] == feature:
+                    f['value'] = value
 
         X = np.array([input_data])
         X_scaled = scaler.transform(X)

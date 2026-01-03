@@ -146,15 +146,15 @@ class FoodDesertPredictor:
             
             # 6. Catégorisation détaillée
             if prob_desert >= 0.70:
-                category = "DÉSERT SÉVÈRE"
+                category = "SEVERE FOOD DESERT"
             elif prob_desert >= 0.50:
-                category = "DÉSERT MODÉRÉ"
+                category = "MODERATE FOOD DESERT"
             elif prob_desert >= 0.35:
-                category = "DÉSERT LÉGER"
+                category = "MILD FOOD DESERT"
             elif prob_desert >= 0.20:
-                category = "ZONE À SURVEILLER"
+                category = "WATCH ZONE"
             else:
-                category = "ZONE SAINE"
+                category = "HEALTHY ZONE"
             
             return {
                 'error': False,
@@ -167,7 +167,7 @@ class FoodDesertPredictor:
                     'desert': round(prob_desert * 100, 1)
                 },
                 'threshold_used': 35.0,  # Seuil ajusté
-                'model_type': 'Random Forest Optimisé',
+                'model_type': 'Optimized Random Forest',
                 'model_score': '9.5/10 ⭐',
                 'note': f"AUC-ROC: 0.920 | Discrimination: 99.6%"
             }

@@ -39,8 +39,8 @@
                                     <i class="bi bi-bar-chart-fill"></i>
                                 </span>
                                 <input type="number" step="any" class="form-control border-start-0 ps-0"
-                                    name="{{ f.name }}" placeholder="{{ f.example }}" required
-                                    style="background: rgba(15,23,42,0.5);">
+                                    name="{{ f.name }}" value="{{ f.value|default:'' }}" placeholder="{{ f.example }}"
+                                    required style="background: rgba(15,23,42,0.5);">
                             </div>
                             <small class="text-muted mt-1 d-block" style="font-size: 0.75rem; opacity: 0.7;">
                                 {{ f.description }}
