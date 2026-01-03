@@ -1,183 +1,95 @@
-<!DOCTYPE html>
-<html lang="fr">
+{% extends 'base.html' %}
+{% load static %}
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Economic Segment Prediction</title>
-    <!-- Bootstrap 5 -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
-    <style>
-        body {
-            background: linear-gradient(135deg, #2c3e50 0%, #4ca1af 100%);
-            min-height: 100vh;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            padding: 20px 0;
-        }
+{% block title %}Segmentation - DataHub{% endblock %}
 
-        .main-container {
-            background: rgba(255, 255, 255, 0.95);
-            border-radius: 20px;
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
-            margin: 20px auto;
-            padding: 30px;
-            max-width: 900px;
-        }
+{% block content %}
+<div class="row justify-content-center">
+    <!-- Header -->
+    <div class="col-12 text-center mb-5">
+        <h1 class="display-4 fw-bold"
+            style="background: linear-gradient(to right, #fff, #94a3b8); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">
+            Economic Segmentation
+        </h1>
+        <p class="text-muted lead">SVM Clustering for Regional Economic Profiling</p>
+    </div>
 
-        .header {
-            text-align: center;
-            margin-bottom: 30px;
-            color: #2c3e50;
-        }
-
-        .nav-links {
-            margin-bottom: 20px;
-        }
-
-        .nav-links a {
-            color: white;
-            text-decoration: none;
-            margin-right: 15px;
-            padding: 8px 15px;
-            background: rgba(255, 255, 255, 0.2);
-            border-radius: 20px;
-            transition: all 0.3s;
-        }
-
-        .nav-links a:hover {
-            background: rgba(255, 255, 255, 0.4);
-        }
-
-        .nav-links a.active {
-            background: rgba(255, 255, 255, 0.5);
-            font-weight: bold;
-        }
-
-        .form-label {
-            font-weight: 600;
-            color: #2c3e50;
-        }
-
-        .btn-predict {
-            background: linear-gradient(45deg, #2c3e50, #4ca1af);
-            color: white;
-            border: none;
-            padding: 12px 30px;
-            border-radius: 10px;
-            width: 100%;
-            font-size: 1.1rem;
-            transition: transform 0.2s;
-        }
-
-        .btn-predict:hover {
-            transform: translateY(-2px);
-            color: white;
-        }
-
-        .result-card {
-            background: #ecf0f1;
-            padding: 20px;
-            border-radius: 10px;
-            text-align: center;
-            margin-top: 20px;
-            border-left: 5px solid #e67e22;
-        }
-
-        .result-value {
-            font-size: 2rem;
-            font-weight: bold;
-            color: #d35400;
-        }
-    </style>
-</head>
-
-<body>
-    <div class="container">
-        <!-- Navigation -->
-        <div class="nav-links text-center">
-            <a href="/"><i class="bi bi-house"></i> Home</a>
-            <a href="/quality/"><i class="bi bi-tree"></i> Food Quality</a>
-            <a href="/diabetes-risk/"><i class="bi bi-heart-pulse"></i> Diabetes Risk</a>
-            <a href="/segment/" class="active"><i class="bi bi-people"></i> Segmentation</a>
-            <a href="/predictor/"><i class="bi bi-cpu"></i> RF Predictor</a>
-        </div>
-
-        <div class="main-container">
-            <div class="header">
-                <h1><i class="bi bi-diagram-3-fill"></i> Economic Segmentation</h1>
-                <p class="text-muted">Predict Economic Class based on County Census Data</p>
-                <div class="alert alert-info py-2 small">
-                    <i class="bi bi-info-circle"></i> Please enter real county-level statistics (e.g. Income > $20k,
-                    Population > 1000). Small inputs will result in Segment 0.
+    <!-- Main Card -->
+    <div class="col-xl-10">
+        <div class="card-custom">
+            <div class="card-header-custom border-0 pb-0">
+                <div class="d-flex align-items-center">
+                    <span class="badge bg-info bg-opacity-10 text-info px-3 py-2 rounded-pill me-3">
+                        <i class="bi bi-pie-chart-fill me-2"></i> SVM CLASSIFIER
+                    </span>
+                    <h4 class="card-title mb-0">Economic Indicators</h4>
                 </div>
             </div>
 
-            <form method="post" action="{% url 'predict_segment' %}">
+            <form method="post" class="p-4">
                 {% csrf_token %}
-                <div class="row g-3">
 
-                    <div class="col-md-6">
-                        <label class="form-label">Median HH Income 2010 ($)</label>
-                        <input type="number" class="form-control" name="MEDHHINC10" value="45000"
-                            placeholder="Ex: 45000" required>
+                <div class="row g-4">
+                    {% for f in features %}
+                    <div class="col-md-6 col-lg-4">
+                        <div class="form-group">
+                            <label class="form-label">{{ f.label }}</label>
+                            <div class="input-group">
+                                <span class="input-group-text bg-transparent border-end-0 text-muted border-secondary">
+                                    <i class="bi bi-graph-up"></i>
+                                </span>
+                                <input type="number" step="any" name="{{ f.name }}"
+                                    class="form-control border-start-0 ps-0" placeholder="{{ f.example }}" required
+                                    style="background: rgba(15,23,42,0.5);">
+                            </div>
+                        </div>
                     </div>
-
-                    <div class="col-md-6">
-                        <label class="form-label">Current Median HH Income ($)</label>
-                        <input type="number" class="form-control" name="median_household_income" value="45000"
-                            placeholder="Ex: 45000" required>
-                    </div>
-
-                    <div class="col-md-6">
-                        <label class="form-label">Labor Force (Count)</label>
-                        <input type="number" class="form-control" name="Labor_Force" value="25000"
-                            placeholder="Ex: 25000" required>
-                    </div>
-
-                    <div class="col-md-6">
-                        <label class="form-label">Employed Population (Count)</label>
-                        <input type="number" class="form-control" name="Employed" value="24000" placeholder="Ex: 24000"
-                            required>
-                    </div>
-
-                    <div class="col-md-6">
-                        <label class="form-label">Unemployed Population (Count)</label>
-                        <input type="number" class="form-control" name="Unemployed" value="1000" placeholder="Ex: 1000"
-                            required>
-                    </div>
-
-                    <div class="col-md-6">
-                        <label class="form-label">Unemployment Rate (%)</label>
-                        <input type="number" step="0.1" class="form-control" name="Unemployment_Rate_county" value="4.0"
-                            placeholder="Ex: 4.0" required>
-                    </div>
-
+                    {% endfor %}
                 </div>
 
-                <div class="mt-4">
-                    <button type="submit" class="btn btn-predict">
-                        <i class="bi bi-search"></i> Predict Segment
+                <div class="mt-5 text-center">
+                    <button type="submit" class="btn btn-primary-custom btn-lg w-50 py-3 text-uppercase fw-bold">
+                        <i class="bi bi-layers-fill me-2"></i> Classify Segment
                     </button>
                 </div>
             </form>
-
-            {% if prediction is not None %}
-            <div class="result-card">
-                <h4>Prediction Result</h4>
-                <div class="result-value">Segment: {{ prediction }}</div>
-                <div class="mt-2 text-muted small">
-                    {% if prediction == 0 %}Low Economic Tier / At Risk
-                    {% elif prediction == 1 %}Lower Middle Class
-                    {% elif prediction == 2 %}Upper Middle Class
-                    {% elif prediction == 3 %}High Economic Tier
-                    {% endif %}
-                </div>
-            </div>
-            {% endif %}
         </div>
     </div>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
-</body>
 
-</html>
+    {% if result is not None %}
+    <div class="col-xl-6 mt-4">
+        <div class="result-box">
+            <h5 class="text-uppercase text-muted mb-3">Economic Segment</h5>
+            <div class="result-value">Cluster {{ result }}</div>
+        </div>
+    </div>
+    {% endif %}
+
+    <!-- Segment Legend -->
+    <div class="col-xl-10 mt-5">
+        <div class="row g-4">
+            <div class="col-md-4">
+                <div class="card-custom text-center py-4">
+                    <i class="bi bi-building text-warning fs-1 mb-3"></i>
+                    <h5 class="mb-1">Cluster 0</h5>
+                    <p class="text-muted mb-0 small">High Economic Activity</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card-custom text-center py-4">
+                    <i class="bi bi-house text-success fs-1 mb-3"></i>
+                    <h5 class="mb-1">Cluster 1</h5>
+                    <p class="text-muted mb-0 small">Moderate Development</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card-custom text-center py-4">
+                    <i class="bi bi-geo-alt text-info fs-1 mb-3"></i>
+                    <h5 class="mb-1">Cluster 2</h5>
+                    <p class="text-muted mb-0 small">Emerging Region</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
