@@ -148,31 +148,21 @@ class FoodQualityPredictor:
     
     def _format_result(self, score):
         """Formater le résultat final"""
-        if score < 25:
-            categorie = "TRÈS FAIBLE"
+        if score < 30:
+            categorie = "LOW"
             couleur = "🔴"
-            recommandation = "INTERVENTION URGENTE"
-            niveau = "critique"
-        elif score < 30:
-            categorie = "FAIBLE"
-            couleur = "🟠"
-            recommandation = "ACTION PRIORITAIRE"
-            niveau = "élevé"
-        elif score < 40:
-            categorie = "MOYEN"
-            couleur = "🟡"
-            recommandation = "AMÉLIORATIONS POSSIBLES"
-            niveau = "modéré"
+            recommandation = "URGENT INTERVENTION NEEDED"
+            niveau = "Low"
         elif score < 45:
-            categorie = "BON"
-            couleur = "🟢"
-            recommandation = "MAINTENIR"
-            niveau = "bon"
+            categorie = "MEDIUM"
+            couleur = "🟡"
+            recommandation = "POSSIBLE IMPROVEMENTS"
+            niveau = "Medium"
         else:
-            categorie = "EXCELLENT"
+            categorie = "HIGH"
             couleur = "🔵"
-            recommandation = "MODÈLE DE RÉFÉRENCE"
-            niveau = "excellent"
+            recommandation = "EXCELLENT QUALITY"
+            niveau = "High"
         
         return {
             'error': False,
