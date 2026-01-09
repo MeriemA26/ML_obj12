@@ -33,9 +33,6 @@ class DiabetesRiskPredictor:
     ]
     
     # Default feature means/medians for missing values (US Averages approx)
-    # Default feature means/medians for missing values (US Averages approx)
-    # NOTE: Decimal fields must be 0.0-1.0 to match model training data
-    # Default feature means/medians for missing values (US Averages approx)
     # NOTE: Decimal fields must be 0.0-1.0 to match model training data
     FEATURE_DEFAULTS = {
         'adult_obesity_rate': 0.30,      # Mean ~0.37
@@ -64,6 +61,11 @@ class DiabetesRiskPredictor:
         'snap_participation_rate': 'PCT_SNAP14',
         'median_household_income': ['median_household_income', 'MEDHHINC10'] # Maps to both
     }
+    
+    # Probability calibration - SVM outputs compressed probabilities
+    # These are the observed min/max from model testing
+    PROB_MIN = 0.035  # ~3.5% observed minimum
+    PROB_MAX = 0.075  # ~7.5% observed maximum
     
     def __init__(self):
         self.model = None
@@ -115,6 +117,18 @@ class DiabetesRiskPredictor:
         else:
             print("❌ No pre-trained model found. Please train the model using 'train_diabetes_model.py' first.")
             self.model_loaded = False
+    
+    def _scale_probability(self, raw_prob: float) -> float:
+        """
+        Scale the raw SVM probability to 0-100% range.
+        
+        The SVM model uses Platt scaling which compresses probabilities to
+        a narrow range (~3.5% to ~7.5%). This method normalizes to full 0-100%.
+        """
+        # Linear scaling: (raw - min) / (max - min)
+        scaled = (raw_prob - self.PROB_MIN) / (self.PROB_MAX - self.PROB_MIN)
+        # Clamp to [0, 1] range
+        return max(0.0, min(1.0, scaled))
     
     def predict(self, input_data: dict) -> dict:
         """Make diabetes risk prediction"""
@@ -190,28 +204,29 @@ class DiabetesRiskPredictor:
         X = np.array([feature_vector])
         X_scaled = self.scaler.transform(X)
         
-        # Get probability
-        probability = self.model.predict_proba(X_scaled)[0][1]
+        # Get raw probability from model
+        raw_probability = self.model.predict_proba(X_scaled)[0][1]
         prediction = self.model.predict(X_scaled)[0]
         
-        print(f"🎯 Risk Probability: {probability:.2%}")
+        # Scale probability to 0-100% range for display
+        scaled_probability = self._scale_probability(raw_probability)
         
-        return self._format_result(probability, feature_vector)
+        print(f"🎯 Raw Probability: {raw_probability:.2%} → Scaled: {scaled_probability:.2%}")
+        
+        return self._format_result(scaled_probability, feature_vector)
     
     def _format_result(self, probability: float, features: list) -> dict:
         """Format the prediction result"""
-        # Determine risk category
-        # CALIBRATED THRESHOLDS: Model outputs are compressed to 3-7% range
-        # due to SVM Platt scaling. Thresholds adjusted accordingly:
-        # - HIGH: >= 5.5% (top ~25% of model range)
-        # - MEDIUM: 4.5% - 5.5% (middle range)
-        # - LOW: < 4.5% (bottom ~40% of model range)
-        if probability >= 0.055:
+        # Determine risk category based on SCALED probability (0-100%)
+        # - HIGH: >= 60% of scaled range
+        # - MEDIUM: 30-60% of scaled range
+        # - LOW: < 30% of scaled range
+        if probability >= 0.60:
             category = "HIGH RISK"
             category_level = "high"
             color = "🔴"
             recommendation = "Immediate intervention recommended. Focus on obesity reduction and physical activity programs."
-        elif probability >= 0.045:
+        elif probability >= 0.30:
             category = "MEDIUM RISK"
             category_level = "medium"
             color = "🟡"
@@ -247,13 +262,13 @@ class DiabetesRiskPredictor:
         
         # Check each feature against thresholds
         thresholds = {
-            'adult_obesity_rate': (32, 'High obesity rate'),
-            'physical_inactivity_rate': (28, 'High physical inactivity'),
+            'adult_obesity_rate': (0.32, 'High obesity rate'),
+            'physical_inactivity_rate': (0.28, 'High physical inactivity'),
             'food_environment_index': (5, 'Poor food environment'),  # Lower is worse
             'poverty_rate': (20, 'High poverty rate'),
-            'food_insecurity_rate': (15, 'High food insecurity'),
-            'access_to_exercise_pct': (50, 'Limited exercise access'),  # Lower is worse
-            'uninsured_rate': (15, 'High uninsured rate'),
+            'food_insecurity_rate': (0.15, 'High food insecurity'),
+            'access_to_exercise_pct': (0.50, 'Limited exercise access'),  # Lower is worse
+            'uninsured_rate': (0.15, 'High uninsured rate'),
         }
         
         for i, (feat, (threshold, label)) in enumerate(thresholds.items()):
