@@ -201,14 +201,17 @@ class DiabetesRiskPredictor:
     def _format_result(self, probability: float, features: list) -> dict:
         """Format the prediction result"""
         # Determine risk category
-        # Determine risk category
-        # thresholds adjusted based on model calibration (0.5% = Low, 19% = High)
-        if probability >= 0.20:
+        # CALIBRATED THRESHOLDS: Model outputs are compressed to 3-7% range
+        # due to SVM Platt scaling. Thresholds adjusted accordingly:
+        # - HIGH: >= 5.5% (top ~25% of model range)
+        # - MEDIUM: 4.5% - 5.5% (middle range)
+        # - LOW: < 4.5% (bottom ~40% of model range)
+        if probability >= 0.055:
             category = "HIGH RISK"
             category_level = "high"
             color = "🔴"
             recommendation = "Immediate intervention recommended. Focus on obesity reduction and physical activity programs."
-        elif probability >= 0.10:
+        elif probability >= 0.045:
             category = "MEDIUM RISK"
             category_level = "medium"
             color = "🟡"
