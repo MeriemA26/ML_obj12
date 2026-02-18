@@ -4,8 +4,8 @@ from django.shortcuts import redirect
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include('obj2.urls')),  # Home (was obj2)
-    path('quality/', include('obj1.urls')),
+    path('', include('food_desert.urls')),  # Home (was obj2)
+    path('quality/', include('food_quality.urls')),
     path('diabetes-risk/', include('diabetes_risk.urls')),
     path('segment/', include('segment.urls')),
     path('predictor/', include('predictor.urls')),  # RF Predictor

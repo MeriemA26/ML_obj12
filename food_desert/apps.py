@@ -3,7 +3,7 @@ from django.apps import AppConfig
 
 class Obj2Config(AppConfig):
     default_auto_field = 'django.db.models.BigAutoField'
-    name = 'obj2'
+    name = 'food_desert'
 
     def ready(self):
         # Charger le modèle au démarrage

@@ -19,12 +19,14 @@ class FoodQualityPredictor:
     def load_model(self):
         """Charger le modèle Random Forest optimisé pour la qualité alimentaire"""
         try:
-            model_path = os.path.join(settings.BASE_DIR, 'food_quality_model_final.pkl')
+            current_dir = os.path.dirname(os.path.abspath(__file__))
+            model_path = os.path.join(current_dir, 'ml', 'food_quality_model_final.pkl')
             print(f"📦 Recherche du modèle à: {model_path}")
             print(f"   • Fichier existe: {os.path.exists(model_path)}")
             
             if not os.path.exists(model_path):
-                model_path = os.path.join(settings.BASE_DIR, '..', 'food_quality_model_final.pkl')
+                # Fallback to base dir only if absolutely necessary, but we are moving it.
+                model_path = os.path.join(settings.BASE_DIR, 'food_quality_model_final.pkl')
                 print(f"📦 Essai chemin alternatif: {model_path}")
                 print(f"   • Fichier existe: {os.path.exists(model_path)}")
             

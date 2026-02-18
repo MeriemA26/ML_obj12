@@ -1,255 +1,115 @@
-# DataHub ML Project - Setup Guide
+# EquiNourish: Predictive Food Equity Engine
 
-This guide will help you clone, set up, and run the DataHub ML project locally.
+> **Foreseeing Needs. Empowering Communities.**
 
----
+![Python](https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white)
+![Django](https://img.shields.io/badge/Django-092E20?style=for-the-badge&logo=django&logoColor=white)
+![Scikit-Learn](https://img.shields.io/badge/scikit--learn-F7931E?style=for-the-badge&logo=scikit-learn&logoColor=white)
+![Pandas](https://img.shields.io/badge/Pandas-150458?style=for-the-badge&logo=pandas&logoColor=white)
 
-## 📋 Prerequisites
+**EquiNourish** is a next-generation predictive intelligence platform dedicated to solving the food security crisis. By synthesizing socioeconomic data, health metrics, and infrastructure analytics, we provide a crystal-clear view of the **food environment landscape**—today and tomorrow.
 
-Before starting, make sure you have the following installed:
-
-- **Python 3.10+** (recommended: Python 3.13 or 3.14)
-- **Git**
-- **pip** (Python package manager)
-
-### Verify Installation
-```bash
-python --version
-git --version
-pip --version
-```
+Our mission? To turn raw data into **lifelines** for vulnerable communities.
 
 ---
 
-## 🚀 Quick Start
+## The Intelligence Core (Objectives)
 
-### Step 1: Clone the Repository
+### 1. QualitySense (`food_quality`)
+***"Is the food good enough?"***
+*Objective: Hyper-local Food Quality Assessment*
 
-```bash
-git clone https://github.com/MeriemA26/ML_obj12.git
-cd ML_obj12
-```
+We don't just guess; we **know**. Using a sophisticated **Random Forest Regressor**, QualitySense triangulates income, activity levels, and resource access to assign a definitive **Quality Score** to any region.
 
-### Step 2: Create a Virtual Environment (Recommended)
+*   **Precision:** $R^2 \approx 0.99$
+*   **Insight:** Detects subtle degradations in food quality before they become health crises.
 
-**Windows:**
-```bash
-python -m venv venv
-venv\Scripts\activate
-```
+*   **Tech Stack:** `Python`, `Scikit-Learn`, `Pandas`, `Django`
+*   **Model:** Random Forest Regressor ($R^2 \approx 0.99$)
+*   **Key Inputs:** Median Household Income, Physical Inactivity Rate, Food Insecurity Rate, Access to Exercise.
+*   **Output:** A granular quality score (0-100) with actionable categorization (Low/Medium/High).
 
-**macOS/Linux:**
-```bash
-python3 -m venv venv
-source venv/bin/activate
-```
+### 2. Food Desert Prediction (`food_desert`)
+***Objective:** Proactively identify potential food deserts before they become critical.*
 
-### Step 3: Install Dependencies
+Using an **Optimized Random Forest Classifier**, this tool predicts the likelihood of a region becoming a food desert based on demographic and economic indicators.
 
-```bash
-pip install django numpy pandas scikit-learn joblib xgboost
-```
+*   **Tech Stack:** `Python`, `Scikit-Learn`, `Imbalanced-Learn`, `Django`
+*   **Model:** Optimized Random Forest (AUC: 0.92)
+*   **Key Features:** Poverty Rate, Vehicle Access, Elderly Population, Obesity Rates.
+*   **Highlights:** High recall (85%) ensures vulnerable areas are rarely missed.
 
-Or if there's a requirements.txt:
-```bash
-pip install -r requirements.txt
-```
+### 3. Customer Segmentation (`segment`)
+***Objective:** Understand community demographics for targeted interventions.*
 
-### Step 4: Run the Development Server
+A **Support Vector Machine (SVM)** approach to segment counties/customers based on economic stability, employment, and income levels.
 
-```bash
-python manage.py runserver
-```
+*   **Tech Stack:** `Python`, `Scikit-Learn` (SVM), `Matplotlib` (Visualization)
+*   **Purpose:** Tailors policy and aid programs to the specific economic reality of each segment.
 
-### Step 5: Open in Browser
+### 4. Future Insecurity Hotspots (`predictor`)
+***Objective:** Forecast future risks of food insecurity.*
 
-Navigate to: **http://127.0.0.1:8000/**
+A predictive engine that models long-term trends to highlight areas at risk of declining into food insecurity, enabling preventative action.
 
----
+*   **Model:** Random Forest Regressor.
+*   **Focus:** Long-term socioeconomic trends and their impact on food access.
 
-## 📁 Project Structure
+### 5. Diabetes Risk Assessment (`diabetes_risk`)
+***Objective:** Correlate environmental factors with health outcomes.*
 
-```
-ML_obj12/
-├── foodenv/              # Django project settings
-│   ├── settings.py
-│   ├── urls.py
-│   └── wsgi.py
-├── obj1/                 # Food Quality Model (RF)
-├── obj2/                 # Food Desert Model (RF)
-├── diabetes_risk/        # Diabetes Risk Model (SVM)
-├── obesity_predictor/    # Obesity Risk Model (XGBoost)
-├── segment/              # Customer Segmentation (SVM)
-├── mlapp/                # Limited Access Model (KNN)
-├── predictor/            # Health Score + Store Impact Models
-├── templates/            # Base templates
-├── static/               # CSS and static files
-├── TESTING_GUIDE.md      # Test values for all models
-└── manage.py             # Django management script
-```
+An **SVM (RBF Kernel)** model that assesses diabetes risk levels based on the food environment and lifestyle factors of a population.
 
 ---
 
-## 🎯 Available ML Models (8 Total)
+## Technology Stack
 
-| # | Model | URL | Algorithm |
-|---|-------|-----|-----------|
-| 1 | Food Desert | http://127.0.0.1:8000/ | Random Forest |
-| 2 | Food Quality | http://127.0.0.1:8000/quality/ | Random Forest |
-| 3 | Diabetes Risk | http://127.0.0.1:8000/diabetes-risk/ | SVM |
-| 4 | Obesity Risk | http://127.0.0.1:8000/obesity/ | XGBoost |
-| 5 | Segmentation | http://127.0.0.1:8000/segment/ | SVM |
-| 6 | Limited Access | http://127.0.0.1:8000/access/ | KNN |
-| 7 | Health Score | http://127.0.0.1:8000/predictor/ | Random Forest |
-| 8 | Store Impact | http://127.0.0.1:8000/predictor/store/ | KNN |
+### Backend & AI
+*   **Framework:** Django 5.2 (Python)
+*   **Machine Learning:** Scikit-Learn, NumPy, Pandas, Joblib
+*   **Data Processing:** Excel/CSV integration, Data Normalization Pipelines
 
----
-
-## 🔧 Common Commands
-
-### Start the Server
-```bash
-python manage.py runserver
-```
-
-### Start on a Different Port
-```bash
-python manage.py runserver 8080
-```
-
-### Make Migrations (if models change)
-```bash
-python manage.py makemigrations
-python manage.py migrate
-```
-
-### Create Admin User
-```bash
-python manage.py createsuperuser
-```
-
-### Check for Issues
-```bash
-python manage.py check
-```
+### Frontend & Visualization
+*   **Templating:** Django Templates (HTML5/CSS3)
+*   **Dashboards:** Power BI Integration capable
+*   **Styling:** Responsive, modern UI/UX design
 
 ---
 
-## 🔄 Git Commands
+## Project Structure
 
-### Pull Latest Changes
-```bash
-git pull origin main
+```
+d:/app/DATAWAREHOUSING/ML_obj12/
+├── food_quality/           # Objective 1: Quality Prediction App
+│   ├── ml/                 # Hosted Models (food_quality_model_final.pkl)
+│   └── views.py            # Inference Logic
+├── food_desert/            # Objective 2: Desert Prediction App
+│   ├── ml/                 # Hosted Models (random_forest_enhanced.pkl)
+│   └── views.py            # Inference Logic
+├── diabetes_risk/          # Health Outcome Analysis
+├── segment/                # Economic Segmentation Module
+├── predictor/              # Future Hotspot Analysis
+├── ml_project/             # Core Django Settings & Routing
+└── manage.py               # Application Entry Point
 ```
 
-### Check Current Branch
-```bash
-git branch
-```
+## Getting Started
 
-### Switch to Main Branch
-```bash
-git checkout main
-```
+1.  **Environment Setup**
+    ```bash
+    pip install -r requirements.txt
+    ```
 
-### View All Branches
-```bash
-git branch -a
-```
+2.  **Run the Server**
+    ```bash
+    python manage.py runserver
+    ```
 
-### Create a New Branch
-```bash
-git checkout -b my-feature-branch
-```
-
-### Commit Changes
-```bash
-git add .
-git commit -m "Your commit message"
-git push origin your-branch-name
-```
+3.  **Access the Modules**
+    *   **Food Desert Predictor:** `http://localhost:8000/`
+    *   **Food Quality Predictor:** `http://localhost:8000/quality/`
+    *   **Diabetes Risk:** `http://localhost:8000/diabetes-risk/`
 
 ---
 
-## 🐛 Troubleshooting
-
-### Issue: "ModuleNotFoundError: No module named 'django'"
-**Solution:** Install Django
-```bash
-pip install django
-```
-
-### Issue: "ModuleNotFoundError: No module named 'sklearn'"
-**Solution:** Install scikit-learn
-```bash
-pip install scikit-learn
-```
-
-### Issue: "ModuleNotFoundError: No module named 'xgboost'"
-**Solution:** Install XGBoost
-```bash
-pip install xgboost
-```
-
-### Issue: Port 8000 already in use
-**Solution:** Use a different port
-```bash
-python manage.py runserver 8080
-```
-
-### Issue: "InconsistentVersionWarning" when loading models
-**Note:** This is just a warning, not an error. The models will still work. To fix:
-```bash
-pip install scikit-learn==1.6.1
-```
-
-### Issue: Static files not loading (CSS broken)
-**Solution:** Check that DEBUG=True in settings.py for development
-
----
-
-## 📊 Testing the Models
-
-Refer to `TESTING_GUIDE.md` for test values for each model.
-
-### Quick Test Steps:
-1. Start the server: `python manage.py runserver`
-2. Open a model page (e.g., http://127.0.0.1:8000/quality/)
-3. Enter test values from the testing guide
-4. Click the submit/predict button
-5. Verify the prediction matches expected results
-
----
-
-## 👥 Team Branches
-
-| Branch | Owner | Models |
-|--------|-------|--------|
-| main | Meriem | obj1, obj2, diabetes_risk |
-| sarra | Sarra | segment, predictor (RF) |
-| yomna | Yomna | obesity_predictor, Store Impact |
-| ayoub | Ayoub | mlapp (Limited Access KNN) |
-
----
-
-## 📞 Need Help?
-
-If you encounter any issues:
-1. Check the Troubleshooting section above
-2. Make sure all dependencies are installed
-3. Try deleting `__pycache__` folders and restarting
-4. Contact the team lead
-
----
-
-## 🎨 UI Theme
-
-The application uses a premium dark theme with:
-- Dark background (#0f172a)
-- Teal/Cyan accent colors (#06b6d4)
-- Glassmorphism effects
-- Modern Inter font family
-
----
-
-*Last Updated: January 3, 2026*
+*Built for better health and smarter cities.*

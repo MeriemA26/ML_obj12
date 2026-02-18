@@ -17,7 +17,8 @@ class FoodDesertPredictor:
     def load_model(self):
         """Charger le modèle Random Forest optimisé"""
         try:
-            model_path = os.path.join(settings.BASE_DIR, 'random_forest_enhanced.pkl')
+            current_dir = os.path.dirname(os.path.abspath(__file__))
+            model_path = os.path.join(current_dir, 'ml', 'random_forest_enhanced.pkl')
             
             if not os.path.exists(model_path):
                 print(f"❌ Modèle non trouvé: {model_path}")

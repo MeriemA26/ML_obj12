@@ -40,8 +40,8 @@ INSTALLED_APPS = [
     'predictor',
     'segment',
     'diabetes_risk',
-    'obj1',
-    'obj2',
+    'food_quality',
+    'food_desert',
     'obesity_predictor',
     'mlapp',  # KNN Limited Access Model from ayoub branch
 ]
